@@ -1,0 +1,80 @@
+---
+title: "Report#1"
+author: "Parimah Emadi"
+date: "9/10/2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+##Loading packages
+ 
+     
+
+```{r}
+library(limma)
+library(pheatmap)
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(data.table)
+library(ggpubr)
+theme_set(theme_pubr())
+```
+
+##Loading Expression Matrices 
+
+
+```{r}
+setwd("/Users/sayeh/Documents/uni/pRact/ThesisCode/data/NormalizedDataRMA/")
+
+Data1 <- read.delim("GSE6575NormalMatrix.txt", sep = " ")  #GPL570
+Data2 <- read.delim("GSE89594NormalMatrix.txt", sep = " ") #GPL16699** , one color, GeneSymbol in End
+Data3 <- read.delim("GSE26415NormalMatrix.txt", sep = " ")  #GPL6480 , one color, GeneSymbol in End
+Data4 <- read.delim("GSE18123NormalMatrix.txt", sep = " ") #GPL6244
+
+```
+
+The expression distribution of all datasets were `r summary(Data1)`, `r summary(Data2)`, `r summary(Data3)` , `r summary(Data4)` with the boxplot: 
+
+```{r}
+
+par(mfrow=c(2,2))
+boxplotDatas <- lapply(Datas, boxplot)
+
+```
+
+Data 1 & 4 both are affymetrix with same summary report of quantiles as for 2,3 agilent arrays
+
+Assigning "GeneSymbol" as a shared colomn in all datasets
+```{r}
+colnames(Data1)[2] <- "GeneSymbol"
+colnames(Data2)[95] <- "GeneSymbol"
+colnames(Data3)[85] <- "GeneSymbol"
+colnames(Data4)[2] <- "GeneSymbol"
+
+```
+
+Removing ID cols and gene symbols with more than one names "///" 
+
+```{r}
+Data1$`GeneSymbol` <- sub("/.*", "", Data1$`GeneSymbol`)
+Data4$`GeneSymbol` <- sub("/.*", "", Data4$`GeneSymbol`)
+Data1 <- Data1[,-1]
+Data4 <- Data4[,-1]
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
